@@ -1,19 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveableObjectScript : MonoBehaviour
 {
-    public float speed = 5.0f;
-    // Start is called before the first frame update
+    public Rigidbody rb; // Public variable to assign the Rigidbody component in Unity Editor
+    public Vector3 force = new Vector3(0, 0, 10); // Define the amount and direction of force
+
     void Start()
     {
-        
+        // Check if Rigidbody is assigned, otherwise try to get it automatically
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        // Add a continuous force to the Rigidbody every frame
+        if (rb != null)
+        {
+            rb.AddForce(force);
+        }
     }
 }
